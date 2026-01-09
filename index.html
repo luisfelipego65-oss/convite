@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Convite Especial 💖</title>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffd6e0, #fff0f5);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .box {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      position: relative;
+      max-width: 340px;
+      z-index: 2;
+    }
+
+    h1 { color: #ff4d6d; }
+
+    p {
+      color: #555;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    #sim {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #sim:hover {
+      transform: scale(1.1);
+    }
+
+    #nao {
+      background-color: #adb5bd;
+      color: white;
+      position: absolute;
+      transition: left 0.3s ease, top 0.3s ease;
+    }
+
+    .coracao {
+      font-size: 32px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .tremendo {
+      animation: tremor 0.3s;
+    }
+
+    @keyframes tremor {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Corações caindo */
+    .heart {
+      position: fixed;
+      top: -20px;
+      font-size: 24px;
+      animation: fall linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box" id="conteudo">
+    <div class="coracao">💖</div>
+    <h1>Kessia Freitas</h1>
+    <p>Eu te amo ❤️</p>
+    <p>Você aceita sair comigo?</p>
+
+    <button id="sim">Sim 😍</button>
+    <button id="nao">Não 🙄</button>
+  </div>
+
+  <script>
+    const nao = document.getElementById("nao");
+    const sim = document.getElementById("sim");
+    const conteudo = document.getElementById("conteudo");
+
+    const textosNao = ["Não 🙄", "Quase 😅", "Opa!", "Errado 😜", "Tenta de novo 💕"];
+
+    nao.addEventListener("mouseenter", () => {
+      const x = Math.random() * (window.innerWidth - 140);
+      const y = Math.random() * (window.innerHeight - 80);
+
+      nao.style.left = x + "px";
+      nao.style.top = y + "px";
+
+      nao.textContent = textosNao[Math.floor(Math.random() * textosNao.length)];
+
+      nao.classList.add("tremendo");
+      setTimeout(() => nao.classList.remove("tremendo"), 300);
+    });
+
+    sim.addEventListener("click", () => {
+      conteudo.innerHTML = `
+        <div class="coracao">💖💖💖</div>
+        <h1>Eu sabia 😍</h1>
+        <p>Kessia, eu te amo muito.</p>
+        <p>Vai ser um momento especial 💕</p>
+      `;
+
+      iniciarCoracoes();
+
+      window.open(
+        "https://open.spotify.com/search/samurai%20djavan",
+        "_blank"
+      );
+    });
+
+    function iniciarCoracoes() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
