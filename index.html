@@ -23,10 +23,11 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
       position: relative;
       max-width: 340px;
-      z-index: 2;
     }
 
-    h1 { color: #ff4d6d; }
+    h1 {
+      color: #ff4d6d;
+    }
 
     p {
       color: #555;
@@ -56,7 +57,7 @@
       background-color: #adb5bd;
       color: white;
       position: absolute;
-      transition: left 0.3s ease, top 0.3s ease;
+      transition: left 0.8s ease, top 0.8s ease;
     }
 
     .coracao {
@@ -70,30 +71,16 @@
       100% { transform: scale(1); }
     }
 
-    .tremendo {
-      animation: tremor 0.3s;
-    }
-
-    @keyframes tremor {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-
-    /* Corações caindo */
     .heart {
       position: fixed;
-      top: -20px;
+      top: -10px;
       font-size: 24px;
       animation: fall linear forwards;
-      z-index: 1;
     }
 
     @keyframes fall {
       to {
-        transform: translateY(110vh);
+        transform: translateY(100vh);
         opacity: 0;
       }
     }
@@ -117,19 +104,24 @@
     const sim = document.getElementById("sim");
     const conteudo = document.getElementById("conteudo");
 
-    const textosNao = ["Não 🙄", "Quase 😅", "Opa!", "Errado 😜", "Tenta de novo 💕"];
+    let tentativas = 0;
 
     nao.addEventListener("mouseenter", () => {
+      tentativas++;
+
+      if (tentativas < 2) {
+        nao.textContent = "Tem certeza? 😅";
+        return;
+      }
+
       const x = Math.random() * (window.innerWidth - 140);
       const y = Math.random() * (window.innerHeight - 80);
 
       nao.style.left = x + "px";
       nao.style.top = y + "px";
 
-      nao.textContent = textosNao[Math.floor(Math.random() * textosNao.length)];
-
-      nao.classList.add("tremendo");
-      setTimeout(() => nao.classList.remove("tremendo"), 300);
+      const textos = ["Opa 😜", "Quase 😅", "Errado 😂", "Não vale 😏"];
+      nao.textContent = textos[Math.floor(Math.random() * textos.length)];
     });
 
     sim.addEventListener("click", () => {
@@ -155,7 +147,6 @@
         heart.textContent = "💖";
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
         document.body.appendChild(heart);
 
         setTimeout(() => {
